@@ -1,0 +1,9 @@
+{
+  "name": "tap-into-60",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tap into 60 - invite/RSVP site with Netlify Forms + Google Drive photo uploads",
+  "dependencies": {
+    "googleapis": "^140.0.0"
+  }
+}
