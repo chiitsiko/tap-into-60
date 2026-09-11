@@ -702,7 +702,11 @@
           })
         })
           .then((res) => {
-            if (!res.ok) throw new Error('Photo upload failed');
+            if (!res.ok) {
+              return res.text().then((body) => {
+                throw new Error('Photo upload step failed (status ' + res.status + '): ' + body);
+              });
+            }
             return res.json();
           })
           .then((json) => json.url || '');
@@ -712,15 +716,22 @@
         data.delete('photo');
         data.set('photo_url', photoUrl || '');
 
-        return fetch('/', { method: 'POST', body: data });
+        return fetch('/', { method: 'POST', body: data })
+          .then((res) => {
+            if (!res.ok) {
+              return res.text().then((body) => {
+                throw new Error('Form submit step failed (status ' + res.status + '): ' + body);
+              });
+            }
+          });
       })
-      .then((res) => {
-        if (!res.ok) throw new Error('Form submit failed');
+      .then(() => {
         form.classList.add('hide');
         thanksBlock.classList.add('show');
       })
-      .catch(() => {
-        alert('Something went wrong sending your RSVP. Please try again, or message Tap directly.');
+      .catch((err) => {
+        console.error(err);
+        alert('RSVP error (please screenshot this): ' + (err && err.message ? err.message : err));
         if (submitBtn) submitBtn.disabled = false;
       });
   });
