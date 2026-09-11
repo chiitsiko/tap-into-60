@@ -551,18 +551,17 @@
         </div>
 
         <div class="field">
-          <label for="guests">Number of Guests <span class="opt">/ Bilang ng Bisita</span></label>
-          <input type="number" id="guests" name="guests" min="1" required>
-        </div>
-
-        <div class="field">
           <label for="dietary">Dietary Restrictions <span class="opt">/ Bawal Kainin (optional)</span></label>
           <input type="text" id="dietary" name="dietary">
         </div>
 
         <div class="field">
-          <label for="cocktails">How Many Will Avail Unlimited Cocktails? <span class="opt">/ Ilan ang iinom sa bilang ng bisita?</span></label>
-          <input type="number" id="cocktails" name="cocktails" min="0" required>
+          <label for="cocktails">Will you be having alcoholic <em>cocktails</em>? <span class="opt">/ Ikaw ba ay iinom ng <em>cocktails</em>?</span></label>
+          <select id="cocktails" name="cocktails" required>
+            <option value="" disabled selected hidden></option>
+            <option value="Yes">Yes / Oo</option>
+            <option value="No">No / Hindi</option>
+          </select>
         </div>
 
         <div class="field">
@@ -618,8 +617,6 @@
 
   const form = document.getElementById('rsvpForm');
   const thanksBlock = document.getElementById('thanksBlock');
-  const guestsInput = document.getElementById('guests');
-  const cocktailsInput = document.getElementById('cocktails');
   const nameInput = document.getElementById('name');
   const photoInput = document.getElementById('photo');
 
@@ -677,14 +674,6 @@
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-
-    const guestsCount = parseInt(guestsInput.value, 10) || 0;
-    const cocktailsCount = parseInt(cocktailsInput.value, 10) || 0;
-    if (cocktailsCount > guestsCount) {
-      alert('The number availing cocktails can\'t be more than your total guest count.');
-      cocktailsInput.focus();
-      return;
-    }
 
     if (submitBtn) submitBtn.disabled = true;
 
