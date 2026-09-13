@@ -720,7 +720,7 @@
       })
       .catch((err) => {
         console.error(err);
-        alert('Something went wrong sending your RSVP. Please try again, or message Merce directly.');
+        alert('RSVP error (please screenshot this): ' + (err && err.message ? err.message : err));
         if (submitBtn) submitBtn.disabled = false;
       });
   });
